@@ -166,24 +166,20 @@ function App() {
   const [customTip, setCustomTip] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filter items based on search term (case insensitive)
   const filteredItems = items.filter(
     (item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Add item to cart (adds a copy of the item)
   const addToCart = (item) => {
     setCart((prev) => [...prev, { ...item }]);
   };
 
-  // Remove an item from the cart by index
   const removeFromCart = (index) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Update price of a cart item at index
   const updateCartItemPrice = (index, newPrice) => {
     setCart((prev) => {
       const updated = [...prev];
@@ -195,32 +191,44 @@ function App() {
     });
   };
 
-  // Clear all cart items
   const clearCart = () => {
     setCart([]);
     setCustomTip(0);
   };
 
-  // Calculations
   const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
   const tip = Number(customTip);
   const subtotalWithTip = subtotal + tip;
-  const tax = subtotalWithTip * 0.08875; // NY tax 8.875%
+  const tax = subtotalWithTip * 0.08875;
   const subtotalWithTax = subtotalWithTip + tax;
-  const serviceFee = subtotalWithTax * 0.0395; // Service fee 3.95%
+  const serviceFee = subtotalWithTax * 0.0395;
   const finalTotal = subtotalWithTax + serviceFee;
 
   return (
     <div
       style={{
         padding: 20,
-        position: 'relative',
+        maxWidth: '600px',
+        margin: '0 auto',
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         backgroundColor: '#fafafa',
         minHeight: '100vh',
+        boxSizing: 'border-box',
+        position: 'relative',
       }}
     >
-      {/* Header with title and cart icon */}
+      <style>
+        {`
+          @media (max-width: 400px) {
+            h1 {
+              font-size: 1.2rem;
+            }
+            input, button {
+              font-size: 14px !important;
+            }
+          }
+        `}
+      </style>
       <header
         style={{
           display: 'flex',
@@ -263,7 +271,6 @@ function App() {
         </div>
       </header>
 
-      {/* Search bar */}
       <div style={{ marginBottom: 20 }}>
         <input
           type="text"
@@ -282,17 +289,16 @@ function App() {
         />
       </div>
 
-      {/* Items grid */}
       <main
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
           gap: '12px',
         }}
       >
         {filteredItems.map((item) => (
           <button
-            key={item.id + Math.random()} // prevent duplicate keys by appending random suffix
+            key={item.id + Math.random()}
             onClick={() => addToCart(item)}
             style={{
               padding: '14px',
@@ -325,264 +331,70 @@ function App() {
         ))}
       </main>
 
-      {/* Cart sidebar */}
       {isCartOpen && (
         <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Cart"
           style={{
             position: 'fixed',
             top: 0,
-            right: 0,
+            left: 0,
+            width: '100vw',
             height: '100vh',
-            width: '400px',
-            maxWidth: '90vw',
-            backgroundColor: 'white',
-            boxShadow: '-4px 0 12px rgba(0,0,0,0.2)',
-            padding: 20,
-            overflowY: 'auto',
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             zIndex: 1000,
           }}
+          onClick={() => setIsCartOpen(false)}
         >
-          <button
-            onClick={() => setIsCartOpen(false)}
-            aria-label="Close cart"
+          <div
             style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              marginBottom: 20,
-              color: '#777',
+              backgroundColor: 'white',
+              borderRadius: 12,
+              padding: 20,
+              width: '90%',
+              maxWidth: 400,
+              maxHeight: '80vh',
+              overflowY: 'auto',
             }}
+            onClick={(e) => e.stopPropagation()}
           >
-            ✕ Close
-          </button>
-
-          <h2 style={{ marginTop: 0, marginBottom: 20 }}>Cart ({cart.length})</h2>
-
-          {cart.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            <>
-              <ul
-                style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0,
-                  maxHeight: '50vh',
-                  overflowY: 'auto',
-                }}
-              >
-                {cart.map((item, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: 12,
-                      borderBottom: '1px solid #eee',
-                      paddingBottom: 8,
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: '700', fontSize: 16 }}>
-                        {item.name}
-                      </div>
-                      <div
-                        style={{
-                          marginTop: 4,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 8,
-                        }}
-                      >
-                        <label
-                          htmlFor={`price-${index}`}
-                          style={{ fontSize: 14 }}
-                        >
-                          Price: $
-                        </label>
-                        <input
-                          id={`price-${index}`}
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          value={item.price}
-                          onChange={(e) =>
-                            updateCartItemPrice(index, e.target.value)
-                          }
-                          style={{
-                            width: 80,
-                            borderRadius: 8,
-                            border: '1px solid #ccc',
-                            padding: '4px 8px',
-                            fontSize: 14,
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => removeFromCart(index)}
-                      aria-label={`Remove ${item.name} from cart`}
-                      style={{
-                        backgroundColor: '#e74c3c',
-                        border: 'none',
-                        color: 'white',
-                        borderRadius: '50%',
-                        width: 28,
-                        height: 28,
-                        cursor: 'pointer',
-                        fontWeight: '700',
-                        fontSize: 18,
-                        lineHeight: 1,
-                      }}
-                    >
-                      ×
-                    </button>
-                  </li>
-                ))}
-              </ul>
-
-              <div style={{ marginTop: 20 }}>
-                <label
-                  htmlFor="tip-input"
-                  style={{ display: 'block', fontWeight: '700', marginBottom: 6 }}
-                >
-                  Custom Tip ($):
-                </label>
+            <h2>Cart</h2>
+            {cart.map((item, index) => (
+              <div key={index} style={{ marginBottom: 10 }}>
+                <div>
+                  {item.name} - $
+                  <input
+                    type="number"
+                    value={item.price}
+                    onChange={(e) =>
+                      updateCartItemPrice(index, e.target.value)
+                    }
+                    style={{ width: 60 }}
+                  />
+                  <button onClick={() => removeFromCart(index)}>Remove</button>
+                </div>
+              </div>
+            ))}
+            <div style={{ marginTop: 10 }}>
+              <label>
+                Tip: $
                 <input
-                  id="tip-input"
                   type="number"
-                  min="0"
-                  step="0.01"
                   value={customTip}
                   onChange={(e) => setCustomTip(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    borderRadius: 12,
-                    border: '1px solid #ccc',
-                    fontSize: 16,
-                    fontWeight: '600',
-                  }}
+                  style={{ width: 60 }}
                 />
-              </div>
-
-              <div
-                style={{
-                  marginTop: 30,
-                  borderTop: '1px solid #ddd',
-                  paddingTop: 20,
-                  fontSize: 16,
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                  }}
-                >
-                  <span>Subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                  }}
-                >
-                  <span>Tip:</span>
-                  <span>${tip.toFixed(2)}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                    fontWeight: '600',
-                  }}
-                >
-                  <span>Subtotal with Tip:</span>
-                  <span>${subtotalWithTip.toFixed(2)}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                  }}
-                >
-                  <span>Sales Tax (8.875%):</span>
-                  <span>${tax.toFixed(2)}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                    fontWeight: '600',
-                  }}
-                >
-                  <span>Subtotal with Tax:</span>
-                  <span>${subtotalWithTax.toFixed(2)}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: 8,
-                  }}
-                >
-                  <span>Service Fee (3.95%):</span>
-                  <span>${serviceFee.toFixed(2)}</span>
-                </div>
-
-                <hr style={{ margin: '12px 0' }} />
-
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontWeight: '700',
-                    fontSize: 18,
-                  }}
-                >
-                  <span>Final Total:</span>
-                  <span>${finalTotal.toFixed(2)}</span>
-                </div>
-              </div>
-
-              <button
-                onClick={clearCart}
-                style={{
-                  marginTop: 30,
-                  width: '100%',
-                  backgroundColor: '#e74c3c',
-                  color: 'white',
-                  padding: '12px',
-                  fontWeight: '700',
-                  fontSize: 16,
-                  borderRadius: 12,
-                  cursor: 'pointer',
-                  border: 'none',
-                }}
-                aria-label="Empty cart"
-              >
-                Empty Cart
-              </button>
-            </>
-          )}
+              </label>
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <p>Subtotal: ${subtotal.toFixed(2)}</p>
+              <p>Tax: ${tax.toFixed(2)}</p>
+              <p>Service Fee: ${serviceFee.toFixed(2)}</p>
+              <p>Total: ${finalTotal.toFixed(2)}</p>
+              <button onClick={clearCart}>Clear Cart</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
