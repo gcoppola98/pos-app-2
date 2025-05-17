@@ -215,6 +215,7 @@ function App() {
         minHeight: '100vh',
         boxSizing: 'border-box',
         position: 'relative',
+        overflowX: 'hidden',
       }}
     >
       <style>
@@ -226,6 +227,11 @@ function App() {
             input, button {
               font-size: 14px !important;
             }
+          }
+          body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
           }
         `}
       </style>
@@ -342,8 +348,11 @@ function App() {
             backgroundColor: 'rgba(0,0,0,0.4)',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             zIndex: 1000,
+            overflowY: 'auto',
+            paddingTop: 40,
+            boxSizing: 'border-box',
           }}
           onClick={() => setIsCartOpen(false)}
         >
@@ -354,8 +363,9 @@ function App() {
               padding: 20,
               width: '90%',
               maxWidth: 400,
-              maxHeight: '80vh',
+              maxHeight: '90vh',
               overflowY: 'auto',
+              boxSizing: 'border-box',
             }}
             onClick={(e) => e.stopPropagation()}
           >
