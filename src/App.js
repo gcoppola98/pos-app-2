@@ -161,398 +161,432 @@ const items = [
 
 
 function App() {
-const [cart, setCart] = useState([]);
-const [isCartOpen, setIsCartOpen] = useState(false);
-const [customTip, setCustomTip] = useState(0);
-const [searchTerm, setSearchTerm] = useState('');
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [customTip, setCustomTip] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
-// Filter items based on search term (case insensitive)
-const filteredItems = items.filter(item =>
-item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-item.id.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  // Filter items based on search term (case insensitive)
+  const filteredItems = items.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-// Add item to cart (adds a copy of the item)
-const addToCart = (item) => {
-setCart(prev => [...prev, { ...item }]);
-};
+  // Add item to cart (adds a copy of the item)
+  const addToCart = (item) => {
+    setCart((prev) => [...prev, { ...item }]);
+  };
 
-// Remove an item from the cart by index
-const removeFromCart = (index) => {
-setCart(prev => prev.filter((_, i) => i !== index));
-};
+  // Remove an item from the cart by index
+  const removeFromCart = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
 
-// Update price of a cart item at index
-const updateCartItemPrice = (index, newPrice) => {
-setCart(prev => {
-const updated = [...prev];
-const priceNum = parseFloat(newPrice);
-if (!isNaN(priceNum) && priceNum >= 0) {
-updated[index].price = priceNum;
-}
-return updated;
-});
-};
+  // Update price of a cart item at index
+  const updateCartItemPrice = (index, newPrice) => {
+    setCart((prev) => {
+      const updated = [...prev];
+      const priceNum = parseFloat(newPrice);
+      if (!isNaN(priceNum) && priceNum >= 0) {
+        updated[index].price = priceNum;
+      }
+      return updated;
+    });
+  };
 
-// Clear all cart items
-const clearCart = () => {
-setCart([]);
-setCustomTip(0);
-};
+  // Clear all cart items
+  const clearCart = () => {
+    setCart([]);
+    setCustomTip(0);
+  };
 
-// Calculate subtotal (sum of all cart item prices)
-const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+  // Calculations
+  const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+  const tip = Number(customTip);
+  const subtotalWithTip = subtotal + tip;
+  const tax = subtotalWithTip * 0.08875; // NY tax 8.875%
+  const subtotalWithTax = subtotalWithTip + tax;
+  const serviceFee = subtotalWithTax * 0.0395; // Service fee 3.95%
+  const finalTotal = subtotalWithTax + serviceFee;
 
-// NY tax 8.875%
-const tax = subtotal * 0.08875;
-
-// Service fee 10% of subtotal
-const serviceFee = subtotal * 0.10;
-
-// Final total includes subtotal + tax + service fee + custom tip
-const finalTotal = subtotal + tax + serviceFee + Number(customTip);
-
-return (
-<div
-style={{
-padding: 20,
-position: 'relative',
-fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-backgroundColor: '#fafafa',
-minHeight: '100vh',
-}}
->
-{/* Header with title and cart icon */}
-<header
-style={{
-display: 'flex',
-justifyContent: 'space-between',
-alignItems: 'center',
-marginBottom: 20,
-}}
->
-<h1 style={{ color: '#333', margin: 0 }}>Hero Sandwich POS</h1>
-<div
-style={{
-position: 'relative',
-cursor: 'pointer',
-fontSize: 30,
-color: '#444',
-userSelect: 'none',
-}}
-onClick={() => setIsCartOpen(true)}
-aria-label="Open cart"
->
-🛒
-{cart.length > 0 && (
-<span
-style={{
-position: 'absolute',
-top: -10,
-right: -10,
-background: '#e74c3c',
-color: 'white',
-borderRadius: '50%',
-padding: '4px 8px',
-fontSize: 12,
-fontWeight: 'bold',
-boxShadow: '0 0 5px rgba(0,0,0,0.2)',
-}}
->
-{cart.length}
-</span>
-)}
-</div>
-</header>
-
-  {/* Search bar */}
-  <div style={{ marginBottom: 20 }}>
-    <input
-      type="text"
-      placeholder="Search by name or ID..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      style={{
-        width: '100%',
-        padding: '12px 16px',
-        borderRadius: 12,
-        border: '1px solid #ccc',
-        fontSize: 16,
-        fontWeight: '600',
-      }}
-      aria-label="Search items"
-    />
-  </div>
-
-  {/* Items grid */}
-  <main
-    style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(5, 1fr)',
-      gap: '12px',
-    }}
-  >
-    {filteredItems.map((item) => (
-      <button
-        key={item.id + Math.random()} // prevent duplicate keys by appending random suffix
-        onClick={() => addToCart(item)}
-        style={{
-          padding: '14px',
-          border: '1px solid #ddd',
-          borderRadius: '12px',
-          backgroundColor: 'white',
-          cursor: 'pointer',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-          transition: 'box-shadow 0.2s ease',
-          fontWeight: '600',
-          fontSize: 16,
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-          e.currentTarget.style.backgroundColor = '#f9f9f9';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-          e.currentTarget.style.backgroundColor = 'white';
-        }}
-        aria-label={`Add ${item.name} for $${item.price.toFixed(2)} to cart`}
-      >
-        <div>{item.name}</div>
-        <div style={{ marginTop: 6, color: '#2c3e50', fontWeight: '700' }}>
-          ${item.price.toFixed(2)}
-        </div>
-      </button>
-    ))}
-  </main>
-
-  {/* Cart sidebar */}
-  {isCartOpen && (
+  return (
     <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Cart"
       style={{
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        height: '100vh',
-        width: '400px',
-        maxWidth: '90vw',
-        backgroundColor: 'white',
-        boxShadow: '-4px 0 12px rgba(0,0,0,0.2)',
         padding: 20,
-        overflowY: 'auto',
-        zIndex: 1000,
+        position: 'relative',
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        backgroundColor: '#fafafa',
+        minHeight: '100vh',
       }}
     >
-      <button
-        onClick={() => setIsCartOpen(false)}
-        aria-label="Close cart"
+      {/* Header with title and cart icon */}
+      <header
         style={{
-          fontSize: 18,
-          fontWeight: 'bold',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginBottom: 20,
-          color: '#777',
         }}
       >
-        ✕ Close
-      </button>
+        <h1 style={{ color: '#333', margin: 0 }}>Hero Sandwich POS</h1>
+        <div
+          style={{
+            position: 'relative',
+            cursor: 'pointer',
+            fontSize: 30,
+            color: '#444',
+            userSelect: 'none',
+          }}
+          onClick={() => setIsCartOpen(true)}
+          aria-label="Open cart"
+        >
+          🛒
+          {cart.length > 0 && (
+            <span
+              style={{
+                position: 'absolute',
+                top: -10,
+                right: -10,
+                background: '#e74c3c',
+                color: 'white',
+                borderRadius: '50%',
+                padding: '4px 8px',
+                fontSize: 12,
+                fontWeight: 'bold',
+                boxShadow: '0 0 5px rgba(0,0,0,0.2)',
+              }}
+            >
+              {cart.length}
+            </span>
+          )}
+        </div>
+      </header>
 
-      <h2 style={{ marginTop: 0, marginBottom: 20 }}>Cart ({cart.length})</h2>
+      {/* Search bar */}
+      <div style={{ marginBottom: 20 }}>
+        <input
+          type="text"
+          placeholder="Search by name or ID..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '12px 16px',
+            borderRadius: 12,
+            border: '1px solid #ccc',
+            fontSize: 16,
+            fontWeight: '600',
+          }}
+          aria-label="Search items"
+        />
+      </div>
 
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <>
-          <ul
+      {/* Items grid */}
+      <main
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '12px',
+        }}
+      >
+        {filteredItems.map((item) => (
+          <button
+            key={item.id + Math.random()} // prevent duplicate keys by appending random suffix
+            onClick={() => addToCart(item)}
             style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-              maxHeight: '50vh',
-              overflowY: 'auto',
+              padding: '14px',
+              border: '1px solid #ddd',
+              borderRadius: '12px',
+              backgroundColor: 'white',
+              cursor: 'pointer',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+              transition: 'box-shadow 0.2s ease',
+              fontWeight: '600',
+              fontSize: 16,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+              e.currentTarget.style.backgroundColor = '#f9f9f9';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+              e.currentTarget.style.backgroundColor = 'white';
+            }}
+            aria-label={`Add ${item.name} for $${item.price.toFixed(
+              2
+            )} to cart`}
+          >
+            <div>{item.name}</div>
+            <div style={{ marginTop: 6, color: '#2c3e50', fontWeight: '700' }}>
+              ${item.price.toFixed(2)}
+            </div>
+          </button>
+        ))}
+      </main>
+
+      {/* Cart sidebar */}
+      {isCartOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Cart"
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            height: '100vh',
+            width: '400px',
+            maxWidth: '90vw',
+            backgroundColor: 'white',
+            boxShadow: '-4px 0 12px rgba(0,0,0,0.2)',
+            padding: 20,
+            overflowY: 'auto',
+            zIndex: 1000,
+          }}
+        >
+          <button
+            onClick={() => setIsCartOpen(false)}
+            aria-label="Close cart"
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: 20,
+              color: '#777',
             }}
           >
-            {cart.map((item, index) => (
-              <li
-                key={index}
+            ✕ Close
+          </button>
+
+          <h2 style={{ marginTop: 0, marginBottom: 20 }}>Cart ({cart.length})</h2>
+
+          {cart.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            <>
+              <ul
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                  borderBottom: '1px solid #eee',
-                  paddingBottom: 8,
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  maxHeight: '50vh',
+                  overflowY: 'auto',
                 }}
               >
-                <div>
-                  <div style={{ fontWeight: '700', fontSize: 16 }}>
-                    {item.name}
-                  </div>
-                  <div
+                {cart.map((item, index) => (
+                  <li
+                    key={index}
                     style={{
-                      marginTop: 4,
                       display: 'flex',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
-                      gap: 8,
+                      marginBottom: 12,
+                      borderBottom: '1px solid #eee',
+                      paddingBottom: 8,
                     }}
                   >
-                    <label htmlFor={`price-${index}`} style={{ fontSize: 14 }}>
-                      Price: $
-                    </label>
-                    <input
-                      id={`price-${index}`}
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={item.price}
-                      onChange={(e) => updateCartItemPrice(index, e.target.value)}
+                    <div>
+                      <div style={{ fontWeight: '700', fontSize: 16 }}>
+                        {item.name}
+                      </div>
+                      <div
+                        style={{
+                          marginTop: 4,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 8,
+                        }}
+                      >
+                        <label
+                          htmlFor={`price-${index}`}
+                          style={{ fontSize: 14 }}
+                        >
+                          Price: $
+                        </label>
+                        <input
+                          id={`price-${index}`}
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={item.price}
+                          onChange={(e) =>
+                            updateCartItemPrice(index, e.target.value)
+                          }
+                          style={{
+                            width: 80,
+                            borderRadius: 8,
+                            border: '1px solid #ccc',
+                            padding: '4px 8px',
+                            fontSize: 14,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(index)}
+                      aria-label={`Remove ${item.name} from cart`}
                       style={{
-                        width: 80,
-                        borderRadius: 8,
-                        border: '1px solid #ccc',
-                        padding: '4px 8px',
-                        fontSize: 14,
+                        backgroundColor: '#e74c3c',
+                        border: 'none',
+                        color: 'white',
+                        borderRadius: '50%',
+                        width: 28,
+                        height: 28,
+                        cursor: 'pointer',
+                        fontWeight: '700',
+                        fontSize: 18,
+                        lineHeight: 1,
                       }}
-                    />
-                  </div>
-                </div>
-                <button
-                  onClick={() => removeFromCart(index)}
-                  aria-label={`Remove ${item.name} from cart`}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div style={{ marginTop: 20 }}>
+                <label
+                  htmlFor="tip-input"
+                  style={{ display: 'block', fontWeight: '700', marginBottom: 6 }}
+                >
+                  Custom Tip ($):
+                </label>
+                <input
+                  id="tip-input"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={customTip}
+                  onChange={(e) => setCustomTip(e.target.value)}
                   style={{
-                    backgroundColor: '#e74c3c',
-                    border: 'none',
-                    color: 'white',
-                    borderRadius: '50%',
-                    width: 28,
-                    height: 28,
-                    cursor: 'pointer',
-                    fontWeight: '700',
-                    fontSize: 18,
-                    lineHeight: 1,
+                    width: '100%',
+                    padding: '8px 12px',
+                    borderRadius: 12,
+                    border: '1px solid #ccc',
+                    fontSize: 16,
+                    fontWeight: '600',
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  marginTop: 30,
+                  borderTop: '1px solid #ddd',
+                  paddingTop: 20,
+                  fontSize: 16,
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
                   }}
                 >
-                  ×
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <span>Subtotal:</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
 
-          <div style={{ marginTop: 20 }}>
-            <label
-              htmlFor="tip-input"
-              style={{ display: 'block', fontWeight: '700', marginBottom: 6 }}
-            >
-              Custom Tip ($):
-            </label>
-            <input
-              id="tip-input"
-              type="number"
-              min="0"
-              step="0.01"
-              value={customTip}
-              onChange={(e) => setCustomTip(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                borderRadius: 12,
-                border: '1px solid #ccc',
-                fontSize: 16,
-                fontWeight: '600',
-              }}
-            />
-          </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
+                  }}
+                >
+                  <span>Tip:</span>
+                  <span>${tip.toFixed(2)}</span>
+                </div>
 
-          <div
-            style={{
-              marginTop: 30,
-              borderTop: '1px solid #ddd',
-              paddingTop: 20,
-              fontSize: 16,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: 8,
-              }}
-            >
-              <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: 8,
-              }}
-            >
-              <span>NY Tax (8.875%):</span>
-              <span>${tax.toFixed(2)}</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: 8,
-              }}
-            >
-              <span>Service Fee (10%):</span>
-              <span>${serviceFee.toFixed(2)}</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: 8,
-              }}
-            >
-              <span>Custom Tip:</span>
-              <span>${Number(customTip).toFixed(2)}</span>
-            </div>
-            <hr style={{ margin: '12px 0' }} />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontWeight: '700',
-                fontSize: 18,
-              }}
-            >
-              <span>Total:</span>
-              <span>${finalTotal.toFixed(2)}</span>
-            </div>
-          </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
+                    fontWeight: '600',
+                  }}
+                >
+                  <span>Subtotal with Tip:</span>
+                  <span>${subtotalWithTip.toFixed(2)}</span>
+                </div>
 
-          <button
-            onClick={clearCart}
-            style={{
-              marginTop: 30,
-              width: '100%',
-              backgroundColor: '#e74c3c',
-              color: 'white',
-              padding: '12px',
-              fontWeight: '700',
-              fontSize: 16,
-              borderRadius: 12,
-              cursor: 'pointer',
-              border: 'none',
-            }}
-            aria-label="Empty cart"
-          >
-            Empty Cart
-          </button>
-        </>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
+                  }}
+                >
+                  <span>Sales Tax (8.875%):</span>
+                  <span>${tax.toFixed(2)}</span>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
+                    fontWeight: '600',
+                  }}
+                >
+                  <span>Subtotal with Tax:</span>
+                  <span>${subtotalWithTax.toFixed(2)}</span>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: 8,
+                  }}
+                >
+                  <span>Service Fee (3.95%):</span>
+                  <span>${serviceFee.toFixed(2)}</span>
+                </div>
+
+                <hr style={{ margin: '12px 0' }} />
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontWeight: '700',
+                    fontSize: 18,
+                  }}
+                >
+                  <span>Final Total:</span>
+                  <span>${finalTotal.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <button
+                onClick={clearCart}
+                style={{
+                  marginTop: 30,
+                  width: '100%',
+                  backgroundColor: '#e74c3c',
+                  color: 'white',
+                  padding: '12px',
+                  fontWeight: '700',
+                  fontSize: 16,
+                  borderRadius: 12,
+                  cursor: 'pointer',
+                  border: 'none',
+                }}
+                aria-label="Empty cart"
+              >
+                Empty Cart
+              </button>
+            </>
+          )}
+        </div>
       )}
     </div>
-  )}
-</div>
-);
+  );
 }
 
 export default App;
