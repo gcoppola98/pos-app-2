@@ -2,44 +2,44 @@ import React, { useState } from 'react';
 
 const items = [
   { id: '#22', name: 'Custom Hero', price: 0 },
-  { id: '#1', name: '#1', price: 16 },
-  { id: '#2', name: '#2', price: 19 },
-  { id: '#3', name: '#3', price: 20 },
-  { id: '#4', name: '#4', price: 13 },
-  { id: '#5', name: '#5', price: 22 },
-  { id: '#6', name: '#6', price: 19 },
-  { id: '#7', name: '#7', price: 23 },
-  { id: '#8', name: '#8', price: 18 },
-  { id: '#9', name: '#9', price: 19 },
-  { id: '#10', name: '#10', price: 17 },
-  { id: '#11', name: '#11', price: 14 },
-  { id: '#12', name: '#12', price: 22 },
-  { id: '#13', name: '#13', price: 19 },
-  { id: '#14', name: '#14', price: 18 },
-  { id: '#15', name: '#15', price: 17 },
-  { id: '#16', name: '#16', price: 17 },
-  { id: '#17', name: '#17', price: 19 },
-  { id: '#18', name: '#18', price: 15 },
-  { id: '#19', name: '#19', price: 16 },
-  { id: '#20', name: '#20', price: 16 },
-  { id: '#21', name: '#21', price: 22 },
-  { id: '#23', name: '#23', price: 19 },
-  { id: '#24', name: '#24', price: 18 },
-  { id: '#25', name: '#25', price: 25 },
-  { id: '#26', name: '#26', price: 21 },
-  { id: '#27', name: '#27', price: 14 },
-  { id: '#28', name: '#28', price: 19 },
-  { id: '#29', name: '#29', price: 16 },
-  { id: '#30', name: '#30', price: 20 },
-  { id: '#31', name: '#31', price: 16 },
-  { id: '#32', name: '#32', price: 20 },
-  { id: '#33', name: '#33', price: 16 },
-  { id: '#34', name: '#34', price: 18 },
-  { id: '#35', name: '#35', price: 16 },
-  { id: '#36', name: '#36', price: 12 },
-  { id: '#37', name: '#37', price: 16 },
-  { id: '#38', name: '#38', price: 16 },
-  { id: '#39', name: '#39', price: 14 },
+  { id: '#1', name: '#1', price: 16, category: 'Regular Heroes' },
+  { id: '#2', name: '#2', price: 19, category: 'Regular Heroes' },
+  { id: '#3', name: '#3', price: 20, category: 'Regular Heroes' },
+  { id: '#4', name: '#4', price: 13, category: 'Regular Heroes' },
+  { id: '#5', name: '#5', price: 22, category: 'Regular Heroes' },
+  { id: '#6', name: '#6', price: 19, category: 'Regular Heroes' },
+  { id: '#7', name: '#7', price: 23, category: 'Regular Heroes' },
+  { id: '#8', name: '#8', price: 18, category: 'Regular Heroes' },
+  { id: '#9', name: '#9', price: 19, category: 'Regular Heroes' },
+  { id: '#10', name: '#10', price: 17, category: 'Regular Heroes' },
+  { id: '#11', name: '#11', price: 14, category: 'Regular Heroes' },,
+  { id: '#12', name: '#12', price: 22, category: 'Regular Heroes' },
+  { id: '#13', name: '#13', price: 19, category: 'Regular Heroes' },
+  { id: '#14', name: '#14', price: 18, category: 'Regular Heroes' },
+  { id: '#15', name: '#15', price: 17, category: 'Regular Heroes' },
+  { id: '#16', name: '#16', price: 17, category: 'Regular Heroes' },
+  { id: '#17', name: '#17', price: 19, category: 'Regular Heroes' },
+  { id: '#18', name: '#18', price: 15, category: 'Regular Heroes' },
+  { id: '#19', name: '#19', price: 16, category: 'Regular Heroes' },
+  { id: '#20', name: '#20', price: 16, category: 'Regular Heroes' },
+  { id: '#21', name: '#21', price: 22, category: 'Regular Heroes' },
+  { id: '#23', name: '#23', price: 19, category: 'Regular Heroes' },
+  { id: '#24', name: '#24', price: 18, category: 'Regular Heroes' },
+  { id: '#25', name: '#25', price: 25, category: 'Regular Heroes' },
+  { id: '#26', name: '#26', price: 21, category: 'Regular Heroes' },
+  { id: '#27', name: '#27', price: 14, category: 'Regular Heroes' },
+  { id: '#28', name: '#28', price: 19, category: 'Regular Heroes' },
+  { id: '#29', name: '#29', price: 16, category: 'Regular Heroes' },
+  { id: '#30', name: '#30', price: 20, category: 'Regular Heroes' },
+  { id: '#31', name: '#31', price: 16, category: 'Regular Heroes' },
+  { id: '#32', name: '#32', price: 20, category: 'Regular Heroes' },
+  { id: '#33', name: '#33', price: 16, category: 'Regular Heroes' },
+  { id: '#34', name: '#34', price: 18, category: 'Regular Heroes' },
+  { id: '#35', name: '#35', price: 16, category: 'Regular Heroes' },
+  { id: '#36', name: '#36', price: 12, category: 'Regular Heroes' },
+  { id: '#37', name: '#37', price: 16, category: 'Regular Heroes' },
+  { id: '#38', name: '#38', price: 16, category: 'Regular Heroes' },
+  { id: '#39', name: '#39', price: 14, category: 'Regular Heroes' },
   { id: '#40', name: '#40', price: 14 },
   { id: '#41', name: '#41', price: 21 },
   { id: '#42', name: '#42', price: 19 },
@@ -140,36 +140,39 @@ const items = [
   { id: '#137', name: '#137', price: 25 },
   { id: '#138', name: '#138', price: 26 },
   { id: '#139', name: '#139', price: 25 },
-  { id: '#1A', name: '#1A', price: 19 },
-  { id: '#2A', name: '#2A', price: 19 },
-  { id: '#3A', name: '#3A', price: 22 },
-  { id: '#4A', name: '#4A', price: 16 },
-  { id: '#5A', name: '#5A', price: 20 },
-  { id: '#6A', name: '#6A', price: 19 },
-  { id: '#7A', name: '#7A', price: 20 },
-  { id: '#8A', name: '#8A', price: 22 },
-  { id: '#9A', name: '#9A', price: 21 },
-  { id: '#10A', name: '#10A', price: 16 },
-  { id: '#12A', name: '#12A', price: 18 },
-  { id: 'P1', name: 'P1', price: 24 },
-  { id: 'P2', name: 'P2', price: 24 },
-  { id: 'P3', name: 'P3', price: 19 },
-  { id: 'P4', name: 'P4', price: 20 },
-  { id: 'P5', name: 'P5', price: 24 },
-  { id: 'P6', name: 'P6', price: 24 },
+  { id: '#1A', name: '#1A', price: 19, category: 'Smoked Mozzarella Heroes' },
+  { id: '#2A', name: '#2A', price: 19, category: 'Smoked Mozzarella Heroes' },
+  { id: '#3A', name: '#3A', price: 22, category: 'Smoked Mozzarella Heroes' },
+  { id: '#4A', name: '#4A', price: 16, category: 'Smoked Mozzarella Heroes' },
+  { id: '#5A', name: '#5A', price: 20, category: 'Smoked Mozzarella Heroes' },
+  { id: '#6A', name: '#6A', price: 19, category: 'Smoked Mozzarella Heroes' },
+  { id: '#7A', name: '#7A', price: 20, category: 'Smoked Mozzarella Heroes' },
+  { id: '#8A', name: '#8A', price: 22, category: 'Smoked Mozzarella Heroes' },
+  { id: '#9A', name: '#9A', price: 21, category: 'Smoked Mozzarella Heroes' },
+  { id: '#10A', name: '#10A', price: 16, category: 'Smoked Mozzarella Heroes' },
+  { id: '#12A', name: '#11A', price: 18, category: 'Smoked Mozzarella Heroes' },
+  { id: 'P1', name: 'P1', price: 24, category: '"P" Heroes ' },
+  { id: 'P2', name: 'P2', price: 24, category: '"P" Heroes ' },
+  { id: 'P3', name: 'P3', price: 19, category: '"P" Heroes ' },
+  { id: 'P4', name: 'P4', price: 20, category: '"P" Heroes ' },
+  { id: 'P5', name: 'P5', price: 24, category: '"P" Heroes ' },
+  { id: 'P6', name: 'P6', price: 24, category: '"P" Heroes ' },
 ];
 
+const categories = ['All', 'Regular Heroes', 'Smoked Mozzarella Heroes', '"P" Heroes '];
 
 function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [customTip, setCustomTip] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredItems = items.filter(
     (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.id.toLowerCase().includes(searchTerm.toLowerCase())
+      (activeCategory === 'All' || item.category === activeCategory) &&
+      (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.id.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const addToCart = (item) => {
@@ -208,7 +211,7 @@ function App() {
     <div
       style={{
         padding: 20,
-        maxWidth: '600px',
+        maxWidth: '1200px',
         margin: '0 auto',
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         backgroundColor: '#fafafa',
@@ -277,7 +280,7 @@ function App() {
         </div>
       </header>
 
-      <div style={{ marginBottom: 20 }}>
+      <div style={{ marginBottom: 12 }}>
         <input
           type="text"
           placeholder="Search by name or ID..."
@@ -293,6 +296,27 @@ function App() {
           }}
           aria-label="Search items"
         />
+      </div>
+
+      <div style={{ marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 20,
+              border: '1px solid #ccc',
+              backgroundColor: activeCategory === cat ? '#3498db' : 'white',
+              color: activeCategory === cat ? 'white' : '#333',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s',
+            }}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
       <main
@@ -336,6 +360,26 @@ function App() {
           </button>
         ))}
       </main>
+
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 20,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          backgroundColor: '#3498db',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: 20,
+          fontWeight: '600',
+          cursor: 'pointer',
+          zIndex: 999,
+          boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+        }}
+        onClick={() => setIsCartOpen(true)}
+      >
+        View Cart (${finalTotal.toFixed(2)})
+      </div>
 
       {isCartOpen && (
         <div
