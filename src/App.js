@@ -12,7 +12,7 @@ const items = [
   { id: '#8', name: '#8', price: 18, category: 'Regular Heroes' },
   { id: '#9', name: '#9', price: 19, category: 'Regular Heroes' },
   { id: '#10', name: '#10', price: 17, category: 'Regular Heroes' },
-  { id: '#11', name: '#11', price: 14, category: 'Regular Heroes' },,
+  { id: '#11', name: '#11', price: 14, category: 'Regular Heroes' },
   { id: '#12', name: '#12', price: 22, category: 'Regular Heroes' },
   { id: '#13', name: '#13', price: 19, category: 'Regular Heroes' },
   { id: '#14', name: '#14', price: 18, category: 'Regular Heroes' },
@@ -40,7 +40,7 @@ const items = [
   { id: '#37', name: '#37', price: 16, category: 'Regular Heroes' },
   { id: '#38', name: '#38', price: 16, category: 'Regular Heroes' },
   { id: '#39', name: '#39', price: 14, category: 'Regular Heroes' },
-   { id: '#40', name: '#40', price: 14, category: 'Regular Heroes' },
+  { id: '#40', name: '#40', price: 14, category: 'Regular Heroes' },
   { id: '#41', name: '#41', price: 21, category: 'Regular Heroes' },
   { id: '#42', name: '#42', price: 19, category: 'Regular Heroes' },
   { id: '#43', name: '#43', price: 19, category: 'Regular Heroes' },
@@ -150,56 +150,165 @@ const items = [
   { id: '#8A', name: '#8A', price: 22, category: 'Smoked Mozzarella Heroes' },
   { id: '#9A', name: '#9A', price: 21, category: 'Smoked Mozzarella Heroes' },
   { id: '#10A', name: '#10A', price: 16, category: 'Smoked Mozzarella Heroes' },
-  { id: '#12A', name: '#11A', price: 18, category: 'Smoked Mozzarella Heroes' },
-  { id: 'P1', name: 'P1', price: 24, category: '"P" Heroes ' },
-  { id: 'P2', name: 'P2', price: 24, category: '"P" Heroes ' },
-  { id: 'P3', name: 'P3', price: 19, category: '"P" Heroes ' },
-  { id: 'P4', name: 'P4', price: 20, category: '"P" Heroes ' },
-  { id: 'P5', name: 'P5', price: 24, category: '"P" Heroes ' },
-  { id: 'P6', name: 'P6', price: 24, category: '"P" Heroes ' },
+  { id: '#11A', name: '#11A', price: 18, category: 'Smoked Mozzarella Heroes' },
+  { id: 'P1', name: 'P1', price: 24, category: '"P" Heroes' },
+  { id: 'P2', name: 'P2', price: 24, category: '"P" Heroes' },
+  { id: 'P3', name: 'P3', price: 19, category: '"P" Heroes' },
+  { id: 'P4', name: 'P4', price: 20, category: '"P" Heroes' },
+  { id: 'P5', name: 'P5', price: 24, category: '"P" Heroes' },
+  { id: 'P6', name: 'P6', price: 24, category: '"P" Heroes' },
 ];
 
-const categories = ['All', 'Regular Heroes', 'Smoked Mozzarella Heroes', '"P" Heroes '];
+const addonCategories = [
+  { title: 'Extra Meat Options', options: [
+      { name: 'Extra Chicken Cutlet', price: 6 },
+      { name: 'Extra Grilled Chicken', price: 6 },
+      { name: 'Extra Eggplant', price: 3 },
+      { name: 'Extra Prosciutto Di Parma', price: 6 },
+      { name: 'Extra Veal', price: 6 },
+      { name: 'Extra Bacon', price: 4 },
+      { name: 'Extra Meat', price: 4 },
+  ]},
+  { title: 'Extra Cheese Options', options: [
+      { name: 'Extra Mozzarella Cheese', price: 3 },
+      { name: 'Extra Smoked Mozzarella Cheese', price: 3 },
+      { name: 'Extra Fresh Ricotta', price: 3 },
+      { name: 'Extra Shaved Reggiano Cheese', price: 4 },
+      { name: 'Extra Cheese', price: 2 },
+  ]},
+  { title: 'Extra Sauce/Gravy Options', options: [
+      { name: 'Extra Tomato Sauce', price: 1 },
+      { name: 'Extra Vodka Sauce', price: 2 },
+      { name: 'Vodka Sauce Substitute', price: 1 },
+      { name: 'Extra Pesto Sauce', price: 3 },
+      { name: 'Extra Brown Gravy', price: 2 },
+  ]},
+  { title: 'Extra Toppings Options', options: [
+      { name: 'Extra 10 Cheese Garlic Mix', price: 3 },
+      { name: 'Extra Arugula', price: 1 },
+      { name: 'Extra Basil Mix', price: 3 },
+      { name: 'Extra Broccoli Rabe', price: 3 },
+      { name: 'Extra Bruschetta', price: 3 },
+      { name: 'Extra Fresh Basil', price: 1 },
+      { name: 'Extra Giardiniera Salad', price: 2 },
+      { name: 'Extra Lettuce', price: 0.5 },
+      { name: 'Extra Muffuletta', price: 3 },
+      { name: 'Extra Mushroom Mix', price: 3 },
+      { name: 'Extra Pickles', price: 1 },
+      { name: 'Extra Stuffed Mushrooms', price: 3 },
+      { name: 'Extra Sun-Dried Tomatoes', price: 3 },
+      { name: 'Extra Tomatoes', price: 0.5 },
+  ]},
+  { title: 'Extra Peppers Options', options: [
+      { name: 'Extra Banana Peppers', price: 3 },
+      { name: 'Extra Roasted Peppers', price: 3 },
+      { name: 'Extra Hot Cherry Peppers', price: 2 },
+      { name: 'Extra Hot Stuffed Peppers', price: 3 },
+      { name: 'Extra Sweet Stuffed Peppers', price: 3 },
+      { name: 'Extra Peppers & Onions', price: 2 },
+  ]},
+  { title: 'Extra Condiments Options', options: [
+      { name: 'Extra Balsamic Glaze', price: 2 },
+      { name: 'Extra Balsamic Vinegar', price: 1 },
+      { name: 'Extra BBQ Sauce', price: 1 },
+      { name: 'Extra Caesar Dressing', price: 1 },
+      { name: 'Extra Hot Sauce', price: 1 },
+      { name: 'Extra Ranch', price: 1 },
+      { name: 'Extra Spicy Ranch', price: 1 },
+  ]}
+];
+
+const specialCustomAddons = [
+  { name: 'Any Meat & Cheese', price: 15 },
+  { name: 'Any Meat & Mozzarella', price: 16 },
+  { name: 'Cutlet & Cheese', price: 15 },
+  { name: 'Cutlet & Mozzarella', price: 16 },
+  { name: 'Grilled Chicken & Cheese', price: 15 },
+  { name: 'Grilled Chicken & Mozzarella', price: 16 },
+  { name: 'Eggplant & Cheese', price: 14 },
+  { name: 'Eggplant & Mozzarella', price: 15 },
+  { name: 'Prosciutto or Veal & Cheese', price: 18 },
+  { name: 'Prosciutto or Veal & Mozzarella', price: 19 },
+  { name: 'Just Tuna (No Cheese)', price: 12 },
+  { name: 'Just Grilled Veggies (No Cheese)', price: 12 },
+  { name: 'Just Meat (No Cheese)', price: 13 },
+  { name: 'Just Proscuitto or Veal (No Cheese)', price: 16 },
+];
+
+const categories = ['All', 'Regular Heroes', 'Smoked Mozzarella Heroes', '"P" Heroes', 'Chips', 'Bread Items', 'Appetizers', "Kid's Menu", 'Beverages', 'Desserts', 'Grocery Items'];
 
 function App() {
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [customTip, setCustomTip] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [addonQuantities, setAddonQuantities] = useState({});
+  const [editIndex, setEditIndex] = useState(null);
+  const [customTip, setCustomTip] = useState(0);
+  const [expandedAddonCategories, setExpandedAddonCategories] = useState([]);
+  const [showCart, setShowCart] = useState(false);
 
   const filteredItems = items.filter(
-    (item) =>
-      (activeCategory === 'All' || item.category === activeCategory) &&
+    (item) => (activeCategory === 'All' || item.category === activeCategory) &&
       (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.id.toLowerCase().includes(searchTerm.toLowerCase()))
+       item.id.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const addToCart = (item) => {
-    setCart((prev) => [...prev, { ...item }]);
+  const getItemCountInCategory = (cat) => {
+    if (cat === 'All') return items.length;
+    return items.filter(item => item.category === cat).length;
   };
 
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
+  const toggleAddonCategory = (title) => {
+    setExpandedAddonCategories((prev) =>
+      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
+    );
   };
 
-  const updateCartItemPrice = (index, newPrice) => {
+  function openCustomization(item, index = null) {
+    setSelectedItem(item);
+    setEditIndex(index);
+    const initialQuantities = index !== null ? Object.fromEntries(item.addons?.map(a => [a.name, a.qty]) || []) : {};
+    setAddonQuantities(initialQuantities);
+  }
+
+  function saveToCart() {
+    const addons = Object.entries(addonQuantities).map(([name, qty]) => {
+      const price = addonCategories.flatMap(c => c.options).find(opt => opt.name === name)?.price || 0;
+      return { name, qty, price };
+    });
+    const itemWithAddons = {
+      ...selectedItem,
+      addons,
+      total: selectedItem.price + addons.reduce((sum, a) => sum + a.price * a.qty, 0),
+    };
     setCart((prev) => {
       const updated = [...prev];
-      const priceNum = parseFloat(newPrice);
-      if (!isNaN(priceNum) && priceNum >= 0) {
-        updated[index].price = priceNum;
-      }
+      if (editIndex !== null) updated[editIndex] = itemWithAddons;
+      else updated.push(itemWithAddons);
       return updated;
     });
-  };
+    setSelectedItem(null);
+    setAddonQuantities({});
+    setEditIndex(null);
+  }
 
-  const clearCart = () => {
-    setCart([]);
-    setCustomTip(0);
-  };
+  function removeFromCart(index) {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  }
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+  function removeAddonFromItem(itemIndex, addonIndex) {
+    setCart((prev) => {
+      const updated = [...prev];
+      const item = updated[itemIndex];
+      item.addons = item.addons.filter((_, i) => i !== addonIndex);
+      item.total = item.price + item.addons.reduce((sum, a) => sum + a.price * a.qty, 0);
+      return updated;
+    });
+  }
+
+  const subtotal = cart.reduce((sum, item) => sum + item.total, 0);
   const tip = Number(customTip);
   const subtotalWithTip = subtotal + tip;
   const tax = subtotalWithTip * 0.08875;
@@ -207,249 +316,129 @@ function App() {
   const serviceFee = subtotalWithTax * 0.0395;
   const finalTotal = subtotalWithTax + serviceFee;
 
-  return (
-    <div
-      style={{
-        padding: 20,
-        maxWidth: '100%',
-        margin: '0 auto',
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        backgroundColor: '#fafafa',
-        minHeight: '100vh',
-        boxSizing: 'border-box',
-        position: 'relative',
-        overflowX: 'hidden',
-      }}
-    >
-      <style>
-        {`
-          @media (max-width: 400px) {
-            h1 {
-              font-size: 1.2rem;
-            }
-            input, button {
-              font-size: 14px !important;
-            }
-          }
-          body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-          }
-        `}
-      </style>
-      <header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 20,
-        }}
-      >
-        <h1 style={{ color: '#333', margin: 0 }}>Giancarlo's POS</h1>
-        <div
-          style={{
-            position: 'relative',
-            cursor: 'pointer',
-            fontSize: 30,
-            color: '#444',
-            userSelect: 'none',
-          }}
-          onClick={() => setIsCartOpen(true)}
-          aria-label="Open cart"
-        >
-          🛒
-          {cart.length > 0 && (
-            <span
-              style={{
-                position: 'absolute',
-                top: -10,
-                right: -10,
-                background: '#e74c3c',
-                color: 'white',
-                borderRadius: '50%',
-                padding: '4px 8px',
-                fontSize: 12,
-                fontWeight: 'bold',
-                boxShadow: '0 0 5px rgba(0,0,0,0.2)',
-              }}
-            >
-              {cart.length}
-            </span>
-          )}
-        </div>
-      </header>
-
-      <div style={{ marginBottom: 12 }}>
-        <input
-          type="text"
-          placeholder="Search Items..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '12px 16px',
-            borderRadius: 12,
-            border: '1px solid #ccc',
-            fontSize: 16,
-            fontWeight: '600',
-          }}
-          aria-label="Search items"
-        />
+return (
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', background: '#f9f9f9', padding: 20, minHeight: '100vh' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <h1 style={{ fontSize: '1.8rem' }}>Heroes POS</h1>
+        <button onClick={() => setShowCart(true)} style={{ position: 'relative', background: '#007AFF', color: '#fff', border: 'none', borderRadius: 20, padding: '6px 12px', fontSize: 14 }}>
+          🛒 {cart.length} • ${subtotal.toFixed(2)}
+        </button>
       </div>
 
-      <div style={{ marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search items..."
+        style={{ width: '100%', padding: 12, borderRadius: 10, border: '1px solid #ccc', marginBottom: 16 }}
+      />
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 16 }}>
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 20,
-              border: '1px solid #ccc',
-              backgroundColor: activeCategory === cat ? '#3498db' : 'white',
-              color: activeCategory === cat ? 'white' : '#333',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'background-color 0.2s',
-            }}
+            style={{ padding: '6px 12px', borderRadius: 8, border: 'none', background: activeCategory === cat ? '#007AFF' : '#eee' }}
           >
-            {cat}
+            {cat} ({getItemCountInCategory(cat)})
           </button>
         ))}
       </div>
 
-      <main
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-          gap: '12px',
-        }}
-      >
-        {filteredItems.map((item) => (
-          <button
-            key={item.id + Math.random()}
-            onClick={() => addToCart(item)}
-            style={{
-              padding: '14px',
-              border: '1px solid #ddd',
-              borderRadius: '12px',
-              backgroundColor: 'white',
-              cursor: 'pointer',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-              transition: 'box-shadow 0.2s ease',
-              fontWeight: '600',
-              fontSize: 16,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-              e.currentTarget.style.backgroundColor = '#f9f9f9';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-              e.currentTarget.style.backgroundColor = 'white';
-            }}
-            aria-label={`Add ${item.name} for $${item.price.toFixed(
-              2
-            )} to cart`}
-          >
-            <div>{item.name}</div>
-            <div style={{ marginTop: 6, color: '#2c3e50', fontWeight: '700' }}>
-              ${item.price.toFixed(2)}
-            </div>
-          </button>
-        ))}
-      </main>
-
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: '#3498db',
-          color: 'white',
-          padding: '10px 20px',
-          borderRadius: 20,
-          fontWeight: '600',
-          cursor: 'pointer',
-          zIndex: 999,
-          boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
-        }}
-        onClick={() => setIsCartOpen(true)}
-      >
-        View Cart (${subtotal.toFixed(2)})
-      </div>
-
-      {isCartOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            zIndex: 1000,
-            overflowY: 'auto',
-            paddingTop: 40,
-            boxSizing: 'border-box',
-          }}
-          onClick={() => setIsCartOpen(false)}
-        >
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: 12 }}>
+        {filteredItems.map(item => (
           <div
-            style={{
-              backgroundColor: 'white',
-              borderRadius: 12,
-              padding: 20,
-              width: '90%',
-              maxWidth: 400,
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              boxSizing: 'border-box',
-            }}
-            onClick={(e) => e.stopPropagation()}
+            key={item.id}
+            style={{ padding: 10, borderRadius: 8, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', cursor: 'pointer' }}
+            onClick={() => openCustomization(item)}
           >
-          <button onClick={clearCart}>Clear Cart</button>
-            <h2>Cart</h2>
-            {cart.map((item, index) => (
-              <div key={index} style={{ marginBottom: 10 }}>
-                <div>
-                  {item.name} - $
-                  <input
-                    type="number"
-                    value={item.price}
-                    onChange={(e) =>
-                      updateCartItemPrice(index, e.target.value)
-                    }
-                    style={{ width: 60 }}
-                  />
-                  <button onClick={() => removeFromCart(index)}>Remove</button>
+            <strong>{item.name}</strong>
+            <div>${item.price.toFixed(2)}</div>
+          </div>
+        ))}
+      </div>
+
+      {selectedItem && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backdropFilter: 'blur(4px)', backgroundColor: 'rgba(0,0,0,0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div style={{ background: 'white', padding: 20, borderRadius: 18, width: '90%', maxWidth: 500, maxHeight: '90%', overflowY: 'auto', WebkitOverflowScrolling: 'touch', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+            <h2 style={{ marginBottom: 16 }}>Customize {selectedItem.name}</h2>
+            {addonCategories.map((cat, idx) => (
+              <div key={idx} style={{ marginBottom: 14 }}>
+                <div
+                  onClick={() => toggleAddonCategory(cat.title)}
+                  style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', background: '#f2f2f7', padding: 10, borderRadius: 10 }}
+                >
+                  <strong>{cat.title}</strong>
+                  <span style={{ fontSize: 18 }}>{expandedAddonCategories.includes(cat.title) ? '▾' : '▸'}</span>
                 </div>
+                {expandedAddonCategories.includes(cat.title) && (
+                  <div style={{ padding: '8px 0' }}>
+                    {cat.options.map((opt, i) => (
+                      <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '6px 0' }}>
+                        <span>{opt.name}</span>
+                        <div>
+                          <button onClick={() => setAddonQuantities(q => ({ ...q, [opt.name]: Math.max((q[opt.name] || 0) - 1, 0) }))} style={{ padding: '2px 6px', borderRadius: 6 }}>-</button>
+                          <span style={{ margin: '0 8px' }}>{addonQuantities[opt.name] || 0}</span>
+                          <button onClick={() => setAddonQuantities(q => ({ ...q, [opt.name]: (q[opt.name] || 0) + 1 }))} style={{ padding: '2px 6px', borderRadius: 6 }}>+</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
-            <div style={{ marginTop: 10 }}>
-              <label>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+              <button onClick={() => setSelectedItem(null)} style={{ marginRight: 12, padding: '8px 16px', borderRadius: 8, border: '1px solid #ccc', background: '#f2f2f2' }}>Cancel</button>
+              <button onClick={saveToCart} style={{ padding: '8px 16px', borderRadius: 8, background: '#007AFF', color: '#fff', border: 'none' }}>Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cart Modal */}
+      {showCart && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div style={{ background: '#fff', padding: 20, borderRadius: 18, width: '90%', maxWidth: 500, maxHeight: '90%', overflowY: 'auto' }}>
+            <h2 style={{ marginBottom: 16 }}>Cart</h2>
+            {cart.map((item, idx) => (
+              <div key={idx} style={{ background: '#f2f2f2', padding: 12, borderRadius: 10, marginBottom: 10 }}>
+                <div>
+                  <strong>{item.name}</strong> - ${item.total.toFixed(2)}
+                  <button onClick={() => openCustomization(item, idx)} style={{ marginLeft: 10 }}>Edit</button>
+                  <button onClick={() => removeFromCart(idx)} style={{ marginLeft: 10, color: 'red' }}>Remove</button>
+                </div>
+                <ul>
+                  {item.addons && item.addons.map((addon, i) => (
+                    <li key={i}>
+                      {addon.qty}× {addon.name} (${(addon.price * addon.qty).toFixed(2)})
+                      <button onClick={() => removeAddonFromItem(idx, i)} style={{ marginLeft: 6, color: 'red' }}>✕</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <div style={{ marginTop: 20 }}>
+              <label style={{ display: 'block', marginBottom: 8 }}>
                 Tip: $
                 <input
                   type="number"
                   value={customTip}
                   onChange={(e) => setCustomTip(e.target.value)}
-                  style={{ width: 60 }}
+                  style={{ marginLeft: 8, width: 80, padding: 6, borderRadius: 6, border: '1px solid #ccc' }}
                 />
               </label>
-            </div>
-            <div style={{ marginTop: 10 }}>
-              <p><strong>Subtotal: ${subtotal.toFixed(2)}</strong></p>
+              <p>Subtotal: ${subtotal.toFixed(2)}</p>
               <p>Tip: ${tip.toFixed(2)}</p>
-              <p><strong>Subtotal with Tip: ${subtotalWithTip.toFixed(2)}</strong></p>
+              <p>Subtotal with Tip: ${subtotalWithTip.toFixed(2)}</p>
               <p>Sales Tax (8.875%): ${tax.toFixed(2)}</p>
-              <p><strong>Subtotal with Tax: ${subtotalWithTax.toFixed(2)}</strong></p>
+              <p>Subtotal with Tax: ${subtotalWithTax.toFixed(2)}</p>
               <p>Service Fee (3.95%): ${serviceFee.toFixed(2)}</p>
               <p><strong>Final Total: ${finalTotal.toFixed(2)}</strong></p>
+            </div>
+
+            <div style={{ marginTop: 16, textAlign: 'right' }}>
+              <button onClick={() => setShowCart(false)} style={{ padding: '8px 16px', borderRadius: 8, border: '1px solid #ccc', background: '#f2f2f2' }}>Close Cart</button>
             </div>
           </div>
         </div>
